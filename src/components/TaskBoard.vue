@@ -8,9 +8,19 @@
       <Icon class="add-icon" type="plus-round"></Icon>
     </div>
     <div class="task-container">
-      <div class="task-item" v-for="(item,index) in taskList" :key="item.id" @click="done">
-        <Checkbox v-model="item.isFinished">{{item.title}}</Checkbox>
-        <span class="item-time">{{item.isFinished ? getTime() : getTime(item.createdTime)}}</span>
+      <div class="task-item" v-for="(item,index) in taskList" :key="item.id">
+        <Checkbox :value="item.isFinished"
+                  class="task-item-check"
+                  @on-change="changeTaskStatus(item.id,$event)"
+        >
+          {{item.title}}
+        </Checkbox>
+        <span class="item-time">
+          {{item.isFinished ? getTime() : getTime(item.createdTime)}}
+        </span>
+        <span @click="removeTodoItem(item.id)">
+          <Icon type="trash-a" size="16" color="#80848f" class="delete-icon"/>
+        </span>
       </div>
     </div>
   </div>
@@ -37,8 +47,6 @@
     },
     computed: {},
     methods: {
-      done() {
-      },
       inputKeyDown(e){
         if(e.keyCode === 13){
           this.addTodo();
@@ -59,7 +67,6 @@
           this.$Message.success("添加成功");
           this.$refs.todoInput.blur();
         });
-
       },
       todoInputBlur() {
         this.inputVisible = false;
@@ -67,6 +74,16 @@
       },
       getTime(timeStamp) {
         return dateTimeFormat(timeStamp ? new Date(timeStamp) : new Date());
+      },
+      changeTaskStatus(id, isDone){
+        this.$emit("doneTodoItem",id,isDone,()=>{
+          this.$Message.success("操作成功");
+        });
+      },
+      removeTodoItem(id){
+        this.$emit('removeTodoItem',id,()=>{
+          this.$Message.success("操作成功");
+        });
       }
     }
   }
@@ -74,6 +91,7 @@
 
 <!-- Add "scoped" attribute to limit CSS to this component only -->
 <style lang="scss" scoped>
+  @import "../style/mixin.scss";
   .task-board {
     padding: 15px;
     width: 50%;
@@ -119,14 +137,26 @@
     .task-container {
       margin-top: 10px;
       .task-item {
+        .ivu-checkbox-wrapper{
+          font-size: 14px;
+        }
+        .task-item-check{
+          cursor: pointer;
+        }
+        font-size: 14px;
         display: flex;
-        cursor: pointer;
+        @include Height(30px);
         &:hover {
           background-color: #f5f5f5;
         }
-      }
-      .item-time {
-        margin-left: auto;
+        .item-time {
+          margin-left: auto;
+          margin-right: 20px;
+        }
+        .delete-icon{
+          @include Height(30px);
+          cursor: pointer;
+        }
       }
     }
 

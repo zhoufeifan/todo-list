@@ -5,10 +5,33 @@
       <a @click="loginOut">退出</a>
     </p>
     <div class="task-list-container">
-      <TaskBoard class="task-1" title="很重要 很紧急" :taskList="getTaskListByType('1')" type="1" @addTodoItem="addTodoByType"/>
-      <TaskBoard class="task-2" title="很重要 不紧急" :taskList="getTaskListByType('2')" type="2" @addTodoItem="addTodoByType"/>
-      <TaskBoard class="task-3" title="不重要 很紧急" :taskList="getTaskListByType('3')" type="3" @addTodoItem="addTodoByType"/>
-      <TaskBoard class="task-4" title="不重要 不紧急" :taskList="getTaskListByType('4')" type="4" @addTodoItem="addTodoByType"/>
+      <TaskBoard class="task-1" title="很重要 很紧急"
+                 :taskList="getTaskListByType('1')"
+                 type="1"
+                 @addTodoItem="addTodoByType"
+                 @doneTodoItem="doneTodoById"
+                 @removeTodoItem="removeTodoById"
+      />
+      <TaskBoard class="task-2" title="很重要 不紧急"
+                 :taskList="getTaskListByType('2')"
+                 type="2"
+                 @addTodoItem="addTodoByType"
+                 @doneTodoItem = "doneTodoById"
+                 @removeTodoItem="removeTodoById"
+      />
+      <TaskBoard class="task-3" title="不重要 很紧急"
+                 :taskList="getTaskListByType('3')"
+                 type="3"
+                 @addTodoItem="addTodoByType"
+                 @doneTodoItem = "doneTodoById"
+                 @removeTodoItem="removeTodoById"
+      />
+      <TaskBoard class="task-4" title="不重要 不紧急"
+                 :taskList="getTaskListByType('4')"
+                 type="4" @addTodoItem="addTodoByType"
+                 @doneTodoItem = "doneTodoById"
+                 @removeTodoItem="removeTodoById"
+      />
     </div>
   </div>
 </template>
@@ -38,6 +61,7 @@
           }
         });
       },
+
       async addTodoByType(type,title,callback){
         try {
           await this.$request({
@@ -50,17 +74,49 @@
           callback && callback();
           this.taskList = await this.getTodoList();
         }catch (e){
-
+          console.log(e);
         }
       },
+
       getTaskListByType(type) {
         return this.taskList.filter(item=>item.type === type);
       },
-       getTodoList(){
+
+      getTodoList(){
         try{
           return this.$request({url:"/todo/getTodoList"});
         }catch (e){
           return [];
+        }
+      },
+
+      async doneTodoById(id,isDone,callback){
+        try {
+          await this.$request({
+            url:"todo/finishedTodos",
+            data:{
+              idList:id
+            }
+          });
+          callback && callback();
+          this.taskList = await this.getTodoList();
+        }catch (e){
+          console.log(e);
+        }
+      },
+
+      async removeTodoById(id,callback){
+        try {
+          await this.$request({
+            url:"todo/removeTodos",
+            data:{
+              idList:id
+            }
+          });
+          callback && callback();
+          this.taskList = await this.getTodoList();
+        }catch (e){
+          console.log(e);
         }
       }
     },
