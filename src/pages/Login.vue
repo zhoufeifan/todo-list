@@ -1,6 +1,6 @@
 <template>
   <Form class="login-form" ref="formInline" :model="formInline" :rules="ruleInline">
-    <FormItem prop="user">
+    <FormItem prop="userName">
       <Input type="text" v-model="formInline.userName" placeholder="Username">
         <Icon type="ios-person-outline" slot="prepend"></Icon>
       </Input>
