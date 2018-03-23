@@ -1,6 +1,6 @@
 import Vue from 'vue';
 import Router from 'vue-router';
-import iView from 'iView';
+import iView from '../pulgins/iview';
 import {LoadingBar, Message} from 'iview';
 import 'iview/dist/styles/iview.css';
 import TaskList from '@/pages/TaskList';
