@@ -10,8 +10,8 @@ import {Request} from 'terrible-utils';
 Vue.use(Router);
 Vue.use(iView);
 Vue.prototype.$request = new Request({
-  // baseURL: "http://openapi.zhoufeifan.tech",
-  baseURL: "http://localhost:3000",
+  baseURL: "http://openapi.zhoufeifan.tech",
+  // baseURL: "http://localhost:3000",
   onLoadingStart: () => {
     LoadingBar.start({
       content: 'Loading...',
