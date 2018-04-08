@@ -49,10 +49,10 @@
 
       return {
         formCustom: {
-          password: '123456',
-          passwordCheck: '123456',
-          userName: 'wangnima',
-          mail: 'nima@nima.com',
+          password: '',
+          passwordCheck: '',
+          userName: '',
+          mail: '',
         },
         ruleCustom: {
           password: [

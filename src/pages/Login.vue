@@ -10,8 +10,8 @@
       <Icon type="ios-locked-outline" slot="prepend"></Icon>
       </Input>
     </FormItem>
-    <FormItem>
-      <Button type="primary" @click="handleSubmit('formInline')">Sign In</Button>
+    <FormItem :style="{ textAlign:'right' }">
+      <Button :style="{ marginRight: '10px' }" type="primary" @click="handleSubmit('formInline')">Sign In</Button>
       <a href="#" @click="$router.push('/register')">注册</a>
     </FormItem>
   </Form>
