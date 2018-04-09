@@ -11,12 +11,12 @@
                     class="date-picker"
                     :options="options"
                     placement="bottom-start"
-                    @on-change="getTaskList"
+                    @on-change="handleDateTimeChange"
                     placeholder="请选择日期">
         </DatePicker>
       </FormItem>
       <FormItem label="查看已完成事项" class="form-item">
-        <i-switch v-model="conditionForm.lookUpFinishedTask" size="large" @on-change="getTaskList">
+        <i-switch v-model="conditionForm.lookUpFinishedTask" size="large">
           <span slot="open">是</span>
           <span slot="close">否</span>
         </i-switch>
@@ -68,7 +68,7 @@
       return {
         taskList:[],
         conditionForm: {
-          dateRange:[new Date(), new Date()],
+          dateRange:[ dateTimeFormat(new Date()), dateTimeFormat(new Date())],
           lookUpFinishedTask: false
         },
         window:window,
@@ -136,20 +136,24 @@
       },
 
       getTaskListByType(type) {
-        return this.taskList.filter(item=>(item.type === type || item.isFinished === this.conditionForm.lookUpFinishedTask));
+        return this.taskList.filter(item=>{
+          return (item.type === type && (this.conditionForm.lookUpFinishedTask ? item.isFinished : true))
+        });
+      },
+
+      async handleDateTimeChange(dateRange){
+        this.conditionForm.dateRange = dateRange;
+        this.taskList = await this.getTaskList();
       },
 
       getTaskList(){
-        let {dateRange:[beginTime,endTime],lookUpFinishedTask} = this.conditionForm;
-        beginTime = dateTimeFormat(beginTime);
-        endTime = dateTimeFormat(endTime);
+        let {dateRange:[beginTime,endTime]} = this.conditionForm;
         try{
           return this.$request({
             url:"/todo/getTaskList",
             data:{
               beginTime,
-              endTime,
-              lookUpFinishedTask
+              endTime
             }
           });
         }catch (e){

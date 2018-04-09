@@ -68,8 +68,8 @@ const devWebpackConfig = merge(baseWebpackConfig, {
   ]
 })
 
-const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
-devWebpackConfig.plugins.push(new BundleAnalyzerPlugin())
+// const BundleAnalyzerPlugin = require('webpack-bundle-analyzer').BundleAnalyzerPlugin
+// devWebpackConfig.plugins.push(new BundleAnalyzerPlugin())
 
 
 module.exports = new Promise((resolve, reject) => {
