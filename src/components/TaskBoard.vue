@@ -12,6 +12,7 @@
         <Checkbox :value="item.isFinished"
                   class="task-item-check"
                   @on-change="changeTaskStatus(item.id,$event)"
+                  :disabled="item.isFinished"
         >
           {{item.title}}
         </Checkbox>

@@ -137,7 +137,9 @@
 
       getTaskListByType(type) {
         return this.taskList.filter(item=>{
-          return (item.type === type && (this.conditionForm.lookUpFinishedTask ? item.isFinished : true))
+          if(this.conditionForm.lookUpFinishedTask)
+            return item.type === type;
+          return item.type === type && !item.isFinished;
         });
       },
 
@@ -164,7 +166,7 @@
       async doneTodoById(id,isDone,callback){
         try {
           await this.$request({
-            url:"todo/finishedTasks",
+            url:"todo/finishedTaskList",
             data:{
               idList:id
             }

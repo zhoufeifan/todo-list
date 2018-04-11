@@ -1,4 +1,4 @@
-import {Form,FormItem,Button,Input,Icon,DatePicker,Switch} from 'iview';
+import {Form,FormItem,Button,Input,Icon,DatePicker,Switch,Checkbox} from 'iview';
 const components = [{
   name:"Form",
   item: Form
@@ -20,6 +20,9 @@ const components = [{
 },{
   name: 'i-switch',
   item: Switch
+},{
+  name: 'Checkbox',
+  item: Checkbox
 }];
 export default {
   install(Vue) {

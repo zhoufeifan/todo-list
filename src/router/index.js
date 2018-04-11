@@ -11,8 +11,8 @@ Vue.use(Router);
 Vue.use(iView);
 Vue.prototype.$Message = Message;
 Vue.prototype.$request = new Request({
-  baseURL: "http://openapi.zhoufeifan.tech",
-  // baseURL: "http://localhost:3001",
+  // baseURL: "http://openapi.zhoufeifan.tech",
+  baseURL: "http://localhost:3001",
   onLoadingStart: () => {
     LoadingBar.start({
       content: 'Loading...',
