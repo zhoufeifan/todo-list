@@ -58,7 +58,7 @@
   import TaskBoard from '@/components/TaskBoard.vue';
   import {dateTime} from 'terrible-utils';
 
-  const {dateTimeFormat} = dateTime;
+  const {dateTimeFormat,getOffsetDateTime} = dateTime;
 
   export default {
     async beforeMount(){
@@ -68,7 +68,7 @@
       return {
         taskList:[],
         conditionForm: {
-          dateRange:[ dateTimeFormat(new Date()), dateTimeFormat(new Date())],
+          dateRange:[ dateTimeFormat(getOffsetDateTime(-7,"day",new Date())), dateTimeFormat(new Date())],
           lookUpFinishedTask: false
         },
         window:window,

@@ -9,13 +9,22 @@
     </div>
     <div class="task-container">
       <div class="task-item" v-for="(item,index) in taskList" :key="item.id">
-        <Checkbox :value="item.isFinished"
-                  class="task-item-check"
-                  @on-change="changeTaskStatus(item.id,$event)"
-                  :disabled="item.isFinished"
-        >
-          {{item.title}}
-        </Checkbox>
+        <span >
+            <Icon
+              class="status-icon"
+              v-if="item.isFinished"
+              type="ios-checkmark-outline"
+              size="24"
+            >
+            </Icon>
+        </span>
+        <span @click="changeTaskStatus(item.id)" class="done-btn">
+          <Icon class="status-icon" size="24" v-if="!item.isFinished" type="ios-circle-outline">
+        </Icon>
+        </span>
+
+        {{item.title}}
+
         <span class="item-time">
           {{item.isFinished ? getTime() : getTime(item.createdTime)}}
         </span>
@@ -76,14 +85,26 @@
       getTime(timeStamp) {
         return dateTimeFormat(timeStamp ? new Date(timeStamp) : new Date());
       },
-      changeTaskStatus(id, isDone){
-        this.$emit("doneTodoItem",id,isDone,()=>{
-          this.$Message.success("操作成功");
+      changeTaskStatus(id){
+        this.$Modal.confirm({
+          title: '提示',
+          content: '是否完成该事项？',
+          onOk:()=>{
+            this.$emit("doneTodoItem",id,()=>{
+              this.$Message.success("操作成功");
+            });
+          }
         });
       },
       removeTodoItem(id){
-        this.$emit('removeTodoItem',id,()=>{
-          this.$Message.success("操作成功");
+        this.$Modal.confirm({
+          title: '提示',
+          content: '是否删除该事项？',
+          onOk:()=>{
+            this.$emit('removeTodoItem',id,()=>{
+              this.$Message.success("操作成功");
+            });
+          }
         });
       }
     }
@@ -138,12 +159,20 @@
     .task-container {
       margin-top: 10px;
       .task-item {
+        .status-icon{
+          @include Height(30px);
+          margin-right: 6px;
+        }
+        .done-btn{
+          cursor: pointer;
+        }
         .ivu-checkbox-wrapper{
           font-size: 14px;
         }
         .task-item-check{
           cursor: pointer;
         }
+
         font-size: 14px;
         display: flex;
         @include Height(30px);
@@ -162,6 +191,9 @@
     }
 
     &.task-1 {
+      .status-icon{
+        color: #ed3f14 !important;
+      }
       .task-board-title, .add-icon {
         color: #ed3f14 !important;
         background-color: #FFEDE7;
@@ -172,6 +204,9 @@
       }
     }
     &.task-2 {
+      .status-icon{
+        color: #ff9900 !important;
+      }
       .task-board-title, .add-icon {
         color: #ff9900 !important;
         background-color: #FFEFCB;
@@ -182,6 +217,9 @@
       }
     }
     &.task-3 {
+      .status-icon{
+        color: #2d8cf0 !important;
+      }
       .task-board-title, .add-icon {
         color: #2d8cf0 !important;
         background-color: #D6F4FE;
@@ -192,6 +230,9 @@
       }
     }
     &.task-4 {
+      .status-icon{
+        color: #19be6b !important;
+      }
       .task-board-title, .add-icon {
         color: #19be6b !important;
         background-color: #EFD;

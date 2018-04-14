@@ -1,7 +1,7 @@
 import Vue from 'vue';
 import Router from 'vue-router';
 import iView from '../pulgins/iview';
-import {LoadingBar, Message} from 'iview';
+import {LoadingBar, Message,Modal} from 'iview';
 import 'iview/dist/styles/iview.css';
 import TaskList from '@/pages/TaskList';
 import Login from '@/pages/Login';
@@ -10,6 +10,7 @@ import {Request} from 'terrible-utils';
 Vue.use(Router);
 Vue.use(iView);
 Vue.prototype.$Message = Message;
+Vue.prototype.$Modal = Modal;
 Vue.prototype.$request = new Request({
   baseURL: "http://openapi.zhoufeifan.tech",
   // baseURL: "http://localhost:3001",

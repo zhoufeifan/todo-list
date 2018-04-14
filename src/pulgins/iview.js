@@ -1,4 +1,4 @@
-import {Form,FormItem,Button,Input,Icon,DatePicker,Switch,Checkbox} from 'iview';
+import {Form,FormItem,Button,Input,Icon,DatePicker,Switch,Checkbox,Modal} from 'iview';
 const components = [{
   name:"Form",
   item: Form
@@ -23,7 +23,11 @@ const components = [{
 },{
   name: 'Checkbox',
   item: Checkbox
+},{
+  name: 'Modal',
+  item: Modal,
 }];
+console.log(components);
 export default {
   install(Vue) {
     components.map(component => Vue.component(component.name, component.item));
